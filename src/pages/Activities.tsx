@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Calendar, Filter } from 'lucide-react';
+import { useActivities } from '../hooks/useActivities'; // Asegúrate de importar el hook
 import type { Activity } from '../types';
 
 const Activities: React.FC = () => {
-  const [activities, setActivities] = React.useState<Activity[]>([]);
-  const [selectedType, setSelectedType] = React.useState<string>('all');
+  const { activities, loading, error } = useActivities(); // Llamar a useActivities para obtener las actividades
+  const [selectedType, setSelectedType] = useState<string>('all');
 
   const activityTypes = [
     { value: 'course', label: 'Cursos' },
@@ -16,10 +17,19 @@ const Activities: React.FC = () => {
     { value: 'workshop', label: 'Talleres' },
   ];
 
+  // Lógica para filtrar actividades por tipo
   const filteredActivities = React.useMemo(() => {
     if (selectedType === 'all') return activities;
     return activities.filter(activity => activity.type === selectedType);
   }, [activities, selectedType]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Puedes mejorar este estado con un spinner o algo similar
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="space-y-8">
@@ -51,43 +61,47 @@ const Activities: React.FC = () => {
 
       {/* Activities Grid */}
       <div className="grid gap-8">
-        {filteredActivities.map((activity) => (
-          <div key={activity.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="md:flex">
-              {activity.multimediaUrl && (
-                <div className="md:flex-shrink-0">
-                  <div className="h-48 w-full md:w-48 bg-gray-300">
-                    <img
-                      src={activity.multimediaUrl}
-                      alt={activity.title}
-                      className="h-full w-full object-cover"
-                    />
+        {filteredActivities.length > 0 ? (
+          filteredActivities.map((activity) => (
+            <div key={activity.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div className="md:flex">
+                {activity.multimediaUrl && (
+                  <div className="md:flex-shrink-0">
+                    <div className="h-48 w-full md:w-48 bg-gray-300">
+                      <img
+                        src={activity.multimediaUrl}
+                        alt={activity.title}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
                   </div>
+                )}
+                <div className="p-8">
+                  <div className="uppercase tracking-wide text-sm text-indigo-600 font-semibold">
+                    {activityTypes.find(type => type.value === activity.type)?.label}
+                  </div>
+                  <h2 className="mt-2 text-xl font-semibold text-gray-900">
+                    {activity.title}
+                  </h2>
+                  <div className="mt-2 flex items-center text-gray-500">
+                    <Calendar className="h-5 w-5 mr-2" />
+                    {new Date(activity.date).toLocaleDateString('es-AR', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </div>
+                  <p className="mt-4 text-gray-500">
+                    {activity.description}
+                  </p>
                 </div>
-              )}
-              <div className="p-8">
-                <div className="uppercase tracking-wide text-sm text-indigo-600 font-semibold">
-                  {activityTypes.find(type => type.value === activity.type)?.label}
-                </div>
-                <h2 className="mt-2 text-xl font-semibold text-gray-900">
-                  {activity.title}
-                </h2>
-                <div className="mt-2 flex items-center text-gray-500">
-                  <Calendar className="h-5 w-5 mr-2" />
-                  {new Date(activity.date).toLocaleDateString('es-AR', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </div>
-                <p className="mt-4 text-gray-500">
-                  {activity.description}
-                </p>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-center text-gray-500">No se encontraron actividades</p>
+        )}
       </div>
     </div>
   );

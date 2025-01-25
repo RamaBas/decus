@@ -13,7 +13,7 @@ const Layout: React.FC = () => {
     { name: 'Actividades', href: '/activities', icon: Calendar },
     { name: 'Publicaciones', href: '/publications', icon: BookOpen },
     { name: 'Novedades', href: '/news', icon: Bell },
-    { name: 'Admin', href: '/admin/', icon: Bell },
+    { name: 'Admin', href: '/admin/login', icon: Bell },
   ];
 
   return (
