@@ -18,7 +18,6 @@ const Login = () => {
     e.preventDefault();
     const loggedIn = await login(email, password);
     if (loggedIn) {
-      console.log("nos vamo pal dashboard");
       navigate('/admin/dashboard'); // Redirige al Dashboard
     }
   };

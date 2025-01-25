@@ -1,22 +1,30 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Search, Filter } from 'lucide-react';
-import type { Book } from '../types';
 import AlphabetFilter from '../components/AlphabetFilter';
 import { useAlphabetFilter } from '../hooks/useAlphabetFilter';
+import { useBooks } from '../hooks/useBook';
 
 const Library: React.FC = () => {
-  const [books, setBooks] = React.useState<Book[]>([]);
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [selectedCategory, setSelectedCategory] = React.useState<string>('all');
-  const [selectedLetter, setSelectedLetter] = React.useState<string>('');
+  const { books, loading, error } = useBooks();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedLetter, setSelectedLetter] = useState<string>('');
 
   // First apply category and search filters
-  const filteredBySearch = React.useMemo(() => {
-    return books.filter(book => {
-      const matchesSearch = book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          book.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase()));
-      const matchesCategory = selectedCategory === 'all' || book.category === selectedCategory;
+  const filteredBySearch = useMemo(() => {
+    if (!books) return [];
+
+    return books.filter((book) => {
+      const matchesSearch =
+        book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.keywords.some((keyword) =>
+          keyword.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+      const matchesCategory =
+        selectedCategory === 'all' || book.category === selectedCategory;
+
       return matchesSearch && matchesCategory;
     });
   }, [books, searchTerm, selectedCategory]);
@@ -62,46 +70,71 @@ const Library: React.FC = () => {
               className="border border-gray-300 rounded-md py-2 pl-3 pr-10 focus:ring-indigo-500 focus:border-indigo-500"
             >
               <option value="all">Todas las categorías</option>
-              {/* Add categories dynamically */}
+              {books &&
+                [...new Set(books.map((book) => book.category))].map(
+                  (category, index) => (
+                    <option key={index} value={category}>
+                      {category}
+                    </option>
+                  )
+                )}
             </select>
           </div>
         </div>
       </div>
 
-      {/* Alphabet Filter */}
+      {/* Alphabet Filter (Before the grid) */}
       <AlphabetFilter
         selectedLetter={selectedLetter}
         onLetterSelect={setSelectedLetter}
       />
 
       {/* Books Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredBooks.map((book) => (
-          <div key={book.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="aspect-w-3 aspect-h-4">
-              <img
-                src={book.coverUrl}
-                alt={book.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="font-bold text-gray-900">{book.title}</h3>
-              <p className="text-sm text-gray-600">{book.author}</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {book.keywords.map((keyword, index) => (
-                  <span
-                    key={index}
-                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800"
-                  >
-                    {keyword}
-                  </span>
-                ))}
+      {loading ? (
+        <p className="text-center text-gray-500">Cargando libros...</p>
+      ) : error ? (
+        <p className="text-center text-red-500">Error al cargar los libros</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredBooks.length > 0 ? (
+            filteredBooks.map((book) => (
+              <div key={book.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div className="aspect-w-3 aspect-h-4">
+                  <img
+                    src={book.coverUrl}
+                    alt={book.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-gray-900">{book.title}</h3>
+                  <p className="text-sm text-gray-600">{book.author}</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {book.keywords.map((keyword, index) => (
+                      <span
+                        key={index}
+                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500 w-full col-span-full">
+              No se encontraron libros que coincidan con la búsqueda.
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Alphabet Filter (After the grid) */}
+      <AlphabetFilter
+        selectedLetter={selectedLetter}
+        onLetterSelect={setSelectedLetter}
+      />
     </div>
   );
 };

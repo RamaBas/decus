@@ -40,6 +40,17 @@ export interface Activity {
   updatedAt: string;
 }
 
+export const activityTypes = [
+  { value: 'course', label: 'Cursos' },
+  { value: 'conference', label: 'Conferencias' },
+  { value: 'seminar', label: 'Seminarios' },
+  { value: 'concert', label: 'Conciertos' },
+  { value: 'video', label: 'Proyecciones' },
+  { value: 'theater', label: 'Teatro Leído' },
+  { value: 'workshop', label: 'Talleres' },
+];
+
+
 export interface Publication {
   id: string;
   title: string;

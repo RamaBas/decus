@@ -17,7 +17,6 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
     // Mientras verificamos si está autenticado, puedes mostrar un loader o algo similar
     return <div>Loading...</div>;
   }
-  console.log("isLogged", useAuth());
   if (isLogged) {
     // Si está autenticado, mostramos el elemento
     return <>{element}</>;

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Calendar, Filter } from 'lucide-react';
 import { useActivities } from '../hooks/useActivities'; // Asegúrate de importar el hook
-import type { Activity } from '../types';
 
 const Activities: React.FC = () => {
   const { activities, loading, error } = useActivities(); // Llamar a useActivities para obtener las actividades

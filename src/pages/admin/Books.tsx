@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PlusCircle, Pencil, Trash2, Search, Filter } from 'lucide-react';
-import type { Book } from '../../types';
+import { useBooks } from '../../hooks/useBook';
+import { BookModal } from '../../components/Modals/BookModal';
+import { Book } from '../../types'
 
 const AdminBooks: React.FC = () => {
-  const [books, setBooks] = React.useState<Book[]>([]);
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [selectedCategory, setSelectedCategory] = React.useState('all');
+  const { books, createBook, updateBook, deleteBook, loading, error } = useBooks();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredBooks = React.useMemo(() => {
     return books.filter(book => {
@@ -17,12 +20,26 @@ const AdminBooks: React.FC = () => {
     });
   }, [books, searchTerm, selectedCategory]);
 
+  const handleCreate = (newBookData) => {
+    createBook({ id: Date.now().toString(), ...newBookData });
+    setIsModalOpen(false);
+  };
+
+  const handleUpdate = (book: Book) => {
+    updateBook({ id, ...book });
+  };
+
+  const handleDelete = (id) => {
+    deleteBook(id);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-gray-900">Gestión de Biblioteca</h1>
         <button
           type="button"
+          onClick={() => setIsModalOpen(true)}
           className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
         >
           <PlusCircle className="h-5 w-5 mr-2" />
@@ -30,19 +47,20 @@ const AdminBooks: React.FC = () => {
         </button>
       </div>
 
+      {isModalOpen &&
+      <BookModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={handleCreate} />
+      }
       {/* Search and Filter */}
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="flex-1">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Buscar por título o autor..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
+        <div className="flex-1 relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Buscar por título o autor..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
         </div>
         <div className="flex items-center space-x-4">
           <Filter className="text-gray-400" />
@@ -67,71 +85,28 @@ const AdminBooks: React.FC = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Libro
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Autor
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Categoría
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Estado
-                    </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Acciones</span>
-                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Libro</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autor</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
+                    <th className="px-6 py-3 relative"><span className="sr-only">Acciones</span></th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredBooks.map((book) => (
                     <tr key={book.id}>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10">
-                            <img
-                              className="h-10 w-10 rounded object-cover"
-                              src={book.coverUrl}
-                              alt={book.title}
-                            />
-                          </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {book.title}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              ISBN: {book.id}
-                            </div>
-                          </div>
+                      <td className="px-6 py-4 flex items-center">
+                        <img className="h-10 w-10 rounded object-cover" src={book.cover_url} alt={book.title} />
+                        <div className="ml-4">
+                          <div className="text-sm font-medium text-gray-900">{book.title}</div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{book.author}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{book.category}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          book.available
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {book.available ? 'Disponible' : 'No Disponible'}
-                        </span>
-                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">{book.author}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{book.category}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button
-                          className="text-indigo-600 hover:text-indigo-900 mr-4"
-                          onClick={() => {/* Handle edit */}}
-                        >
+                        <button className="text-indigo-600 hover:text-indigo-900 mr-4" onClick={() => handleUpdate(book)}>
                           <Pencil className="h-5 w-5" />
                         </button>
-                        <button
-                          className="text-red-600 hover:text-red-900"
-                          onClick={() => {/* Handle delete */}}
-                        >
+                        <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(book.id)}>
                           <Trash2 className="h-5 w-5" />
                         </button>
                       </td>
