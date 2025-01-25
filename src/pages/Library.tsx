@@ -17,10 +17,7 @@ const Library: React.FC = () => {
     return books.filter((book) => {
       const matchesSearch =
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.keywords.some((keyword) =>
-          keyword.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        book.author.toLowerCase().includes(searchTerm.toLowerCase())
 
       const matchesCategory =
         selectedCategory === 'all' || book.category === selectedCategory;
@@ -109,16 +106,6 @@ const Library: React.FC = () => {
                 <div className="p-4">
                   <h3 className="font-bold text-gray-900">{book.title}</h3>
                   <p className="text-sm text-gray-600">{book.author}</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {book.keywords.map((keyword, index) => (
-                      <span
-                        key={index}
-                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800"
-                      >
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </div>
             ))

@@ -22,7 +22,6 @@ export interface Book {
   category: string;
   coverUrl: string;
   indexUrl: string;
-  keywords: string[];
   description: string;
   createdAt: string;
   updatedAt: string;

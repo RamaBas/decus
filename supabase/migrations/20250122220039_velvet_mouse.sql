@@ -18,7 +18,6 @@
       - category (text)
       - cover_url (text)
       - index_url (text)
-      - keywords (text[])
     - activities
       - id (uuid, primary key)
       - type (text)
@@ -67,8 +66,7 @@ CREATE TABLE books (
   description text,
   category text NOT NULL,
   cover_url text,
-  index_url text,
-  keywords text[],
+  index_url text
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
 );

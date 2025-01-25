@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { PlusCircle, Pencil, Trash2, Search, Filter } from 'lucide-react';
 import { useBooks } from '../../hooks/useBook';
 import { BookModal } from '../../components/Modals/BookModal';
-import { Book } from '../../types'
+import { Book } from '../../types';
 
 const AdminBooks: React.FC = () => {
   const { books, createBook, updateBook, deleteBook, loading, error } = useBooks();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentBook, setCurrentBook] = useState<Book | null>(null);
 
   const filteredBooks = React.useMemo(() => {
     return books.filter(book => {
-      const matchesSearch = 
+      const matchesSearch =
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || book.category === selectedCategory;
@@ -20,17 +21,20 @@ const AdminBooks: React.FC = () => {
     });
   }, [books, searchTerm, selectedCategory]);
 
-  const handleCreate = (newBookData) => {
-    createBook({ id: Date.now().toString(), ...newBookData });
+  const handleOpenModal = (book?: Book) => {
+    setCurrentBook(book || null);
+    setIsModalOpen(true);
+  };
+
+  const handleSave = (bookData: Book) => {
+    console.log("currentBook", currentBook?.id);
+    console.log("bookData", bookData);
+    if (currentBook) {
+      updateBook(currentBook?.id, {...bookData });
+    } else {
+      createBook({ id: Date.now().toString(), ...bookData });
+    }
     setIsModalOpen(false);
-  };
-
-  const handleUpdate = (book: Book) => {
-    updateBook({ id, ...book });
-  };
-
-  const handleDelete = (id) => {
-    deleteBook(id);
   };
 
   return (
@@ -39,7 +43,7 @@ const AdminBooks: React.FC = () => {
         <h1 className="text-2xl font-semibold text-gray-900">Gestión de Biblioteca</h1>
         <button
           type="button"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => handleOpenModal()}
           className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
         >
           <PlusCircle className="h-5 w-5 mr-2" />
@@ -47,9 +51,15 @@ const AdminBooks: React.FC = () => {
         </button>
       </div>
 
-      {isModalOpen &&
-      <BookModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={handleCreate} />
-      }
+      {isModalOpen && (
+        <BookModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+          book={currentBook}
+        />
+      )}
+
       {/* Search and Filter */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 relative">
@@ -95,7 +105,7 @@ const AdminBooks: React.FC = () => {
                   {filteredBooks.map((book) => (
                     <tr key={book.id}>
                       <td className="px-6 py-4 flex items-center">
-                        <img className="h-10 w-10 rounded object-cover" src={book.cover_url} alt={book.title} />
+                        <img className="h-10 w-10 rounded object-cover" src={book.coverUrl} alt={book.title} />
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">{book.title}</div>
                         </div>
@@ -103,10 +113,10 @@ const AdminBooks: React.FC = () => {
                       <td className="px-6 py-4 whitespace-nowrap">{book.author}</td>
                       <td className="px-6 py-4 whitespace-nowrap">{book.category}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button className="text-indigo-600 hover:text-indigo-900 mr-4" onClick={() => handleUpdate(book)}>
+                        <button className="text-indigo-600 hover:text-indigo-900 mr-4" onClick={() => handleOpenModal(book)}>
                           <Pencil className="h-5 w-5" />
                         </button>
-                        <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(book.id)}>
+                        <button className="text-red-600 hover:text-red-900" onClick={() => deleteBook(book.id)}>
                           <Trash2 className="h-5 w-5" />
                         </button>
                       </td>
