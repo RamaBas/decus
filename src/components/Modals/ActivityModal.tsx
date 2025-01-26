@@ -27,7 +27,6 @@ interface ActivityModalProps {
 }
 
 export const ActivityModal: React.FC<ActivityModalProps> = ({ isOpen, onClose, activity, onSave }) => {
-  const { createActivity, updateActivity } = useActivities();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
