@@ -66,8 +66,8 @@ export interface Publication {
   updatedAt: string;
 }
 
-export interface News {
-  id: string;
+export interface NewsDTO {
+  id?: string;
   title: string;
   content: string;
   imageUrl?: string;

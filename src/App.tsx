@@ -10,7 +10,7 @@ import Academics from './pages/Academics';
 import Library from './pages/Library';
 import Activities from './pages/Activities';
 import Publications from './pages/Publications';
-import News from './pages/News';
+import News from './pages/News/News';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminAcademics from './pages/admin/Academics';
 import AdminBooks from './pages/admin/Books';
@@ -18,6 +18,8 @@ import AdminActivities from './pages/admin/Activities';
 import AdminPublications from './pages/admin/Publications';
 import AdminNews from './pages/admin/News';
 import PrivateRoute from './routes/privateRoute';
+import Morra from './pages/Morra';
+import NewsDetail from './pages/News/NewDetail';
 
 export default function App() {
   return (
@@ -28,11 +30,13 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="disandro/*" element={<Disandro />} />
+          <Route path="morra/*" element={<Morra />} />
           <Route path="academics" element={<Academics />} />
           <Route path="library" element={<Library />} />
           <Route path="activities" element={<Activities />} />
           <Route path="publications" element={<Publications />} />
           <Route path="news" element={<News />} />
+          <Route path="/news/:id" element={<NewsDetail />} />
           <Route path="/admin/login" element={<Login />} />
         </Route>
 

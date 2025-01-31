@@ -1,34 +1,28 @@
 import React, { useState } from 'react';
-import { Calendar, Filter } from 'lucide-react';
-import { useActivities } from '../hooks/useActivities'; // Asegúrate de importar el hook
-
+import {  } from 'lucide-react';
+import { useActivities } from '../hooks/useActivities';
+import { Calendar, BookOpen, Users, Mic, Landmark, Music, Video, Theater, Hammer, Globe } from 'lucide-react';
 const Activities: React.FC = () => {
-  const { activities, loading, error } = useActivities(); // Llamar a useActivities para obtener las actividades
+  const { activities, loading, error } = useActivities();
   const [selectedType, setSelectedType] = useState<string>('all');
 
   const activityTypes = [
-    { value: 'course', label: 'Cursos' },
-    { value: 'conference', label: 'Conferencias' },
-    { value: 'seminar', label: 'Seminarios' },
-    { value: 'concert', label: 'Conciertos' },
-    { value: 'video', label: 'Proyecciones' },
-    { value: 'theater', label: 'Teatro Leído' },
-    { value: 'workshop', label: 'Talleres' },
+    { label: 'Todas', value: 'all', icon: Globe },
+    { label: 'Cursos', value: 'course', icon: BookOpen },
+    { label: 'Conferencias', value: 'conference', icon: Mic },
+    { label: 'Seminarios', value: 'seminar', icon: Landmark },
+    { label: 'Conciertos', value: 'concert', icon: Music },
+    { label: 'Proyecciones', value: 'video', icon: Video },
+    { label: 'Teatro Leído', value: 'theater', icon: Theater },
+    { label: 'Talleres', value: 'workshop', icon: Hammer },
   ];
-
-  // Lógica para filtrar actividades por tipo
   const filteredActivities = React.useMemo(() => {
     if (selectedType === 'all') return activities;
     return activities.filter(activity => activity.type === selectedType);
   }, [activities, selectedType]);
 
-  if (loading) {
-    return <div>Loading...</div>; // Puedes mejorar este estado con un spinner o algo similar
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="space-y-8">
@@ -39,26 +33,31 @@ const Activities: React.FC = () => {
         </p>
       </div>
 
-      {/* Filter Section */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex items-center space-x-4">
-          <Filter className="text-gray-400" />
-          <select
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            className="border border-gray-300 rounded-md py-2 pl-3 pr-10 focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="all">Todas las actividades</option>
+      {/* Filtro por tipo de actividad */}
+      <nav className="bg-white shadow rounded-lg">
+        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center space-x-8">
             {activityTypes.map((type) => (
-              <option key={type.value} value={type.value}>
+              <button
+                key={type.value}
+                onClick={() => setSelectedType(type.value)}
+                className={
+                  `flex items-center px-3 py-4 text-sm font-medium ${
+                    selectedType === type.value
+                        ? 'text-indigo-600 border-b-2 border-indigo-600'
+                        : 'text-gray-500 hover:text-gray-900'
+                    }`
+                  }
+              >
+                <type.icon className="h-5 w-5 mr-2" />
                 {type.label}
-              </option>
+              </button>
             ))}
-          </select>
+          </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Activities Grid */}
+      {/* Lista de actividades */}
       <div className="grid gap-8">
         {filteredActivities.length > 0 ? (
           filteredActivities.map((activity) => (
@@ -91,9 +90,7 @@ const Activities: React.FC = () => {
                       day: 'numeric',
                     })}
                   </div>
-                  <p className="mt-4 text-gray-500">
-                    {activity.description}
-                  </p>
+                  <p className="mt-4 text-gray-500">{activity.description}</p>
                 </div>
               </div>
             </div>

@@ -54,7 +54,7 @@ const Home: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gray-900 bg-opacity-60"></div>
         </div>
-        <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+        <div className="relative max-w-9xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
             Biblioteca Académica DECUS
           </h1>
@@ -66,7 +66,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Explore Nuestros Recursos
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
 
       {/* Latest News Section */}
       <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-gray-900">
               Últimas Novedades

@@ -8,9 +8,9 @@ const Layout: React.FC = () => {
   const navigation = [
     { name: 'Quiénes Somos', href: '/about', icon: Book },
     { name: 'Carlos A. Disandro', href: '/disandro', icon: GraduationCap },
+    { name: 'Elvira Morra', href: '/morra', icon: GraduationCap },
     { name: 'Académicos', href: '/academics', icon: GraduationCap },
-    { name: 'Biblioteca', href: '/library', icon: Library },
-    { name: 'Actividades', href: '/activities', icon: Calendar },
+    { name: 'Actividades Realizadas', href: '/activities', icon: Calendar },
     { name: 'Publicaciones', href: '/publications', icon: BookOpen },
     { name: 'Novedades', href: '/news', icon: Bell },
     { name: 'Admin', href: '/admin/login', icon: Bell },
@@ -20,7 +20,7 @@ const Layout: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center">
               <Library className="h-8 w-8 text-indigo-600" />
@@ -73,13 +73,13 @@ const Layout: React.FC = () => {
       </header>
 
       {/* Main content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Outlet />
       </main>
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">

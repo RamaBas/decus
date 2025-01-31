@@ -6,23 +6,40 @@ export function useFetch<T>(tableName: string) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = async (): Promise<T[]> => {
     setLoading(true);
     setError(null);
     try {
       const { data, error } = await supabase.from(tableName).select('*');
       if (error) throw error;
-      setData(data || []);
+      return data || [];
     } catch (err: any) {
       setError(err.message);
+      return [];
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [tableName]);
+  // Función para obtener un elemento por ID
+  const fetchById = async (id: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { data, error } = await supabase
+        .from(tableName)
+        .select('*')
+        .eq('id', id)
+        .single(); // Usamos .single() porque esperamos un solo resultado
+      if (error) throw error;
+      return data as T;
+    } catch (err: any) {
+      setError(err.message);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  return { data, loading, error, refetch: fetchData };
+  return { data, loading, error, refetch: fetchData, fetchById, fetchData };
 }

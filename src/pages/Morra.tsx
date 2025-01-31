@@ -1,23 +1,22 @@
 import React from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Book, Music, Image, FileText, Briefcase } from 'lucide-react';
+import { Book, Music, Image, FileText } from 'lucide-react';
 
-const DisandroLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const MorraLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const sections = [
-    { name: 'Trayectoria', path: '/disandro', icon: FileText },
-    { name: 'Biblioteca', path: '/disandro/library', icon: Book },
-    { name: 'Discoteca', path: '/disandro/music', icon: Music },
-    { name: 'Trabajos', path: '/disandro/works', icon: Briefcase },
-    { name: 'Galería', path: '/disandro/gallery', icon: Image },
+    { name: 'Trayectoria', path: '/morra', icon: FileText },
+    { name: 'Biblioteca', path: '/morra/library', icon: Book },
+    { name: 'Discoteca', path: '/morra/music', icon: Music },
+    { name: 'Galería', path: '/morra/gallery', icon: Image },
   ];
 
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900">Carlos A. Disandro</h1>
+        <h1 className="text-4xl font-bold text-gray-900">Profesora Elvira Morra</h1>
         <p className="mt-4 text-xl text-gray-500">
-          Explorar la vida y obra de un académico excepcional
+          Explorar la vida y obra de una académica excepcional
         </p>
       </div>
 
@@ -52,10 +51,9 @@ const Trayectoria: React.FC = () => (
     <h2 className="text-2xl font-bold text-gray-900 mb-6">Trayectoria Académica</h2>
     <div className="prose max-w-none">
       <p className="text-gray-600">
-        Carlos Alberto Disandro fue un destacado académico, filólogo y humanista argentino. 
+        Elvira Morra fue un destacado académico, filólogo y humanista argentino. 
         Su trabajo se centró en el estudio de las lenguas clásicas, la literatura y la cultura antigua.
       </p>
-      {/* Add more content about Disandro's academic career */}
     </div>
   </div>
 );
@@ -84,25 +82,17 @@ const Galeria: React.FC = () => (
   </div>
 );
 
-const Trabajos: React.FC = () => (
-  <div className="bg-white shadow rounded-lg p-8">
-    <h2 className="text-2xl font-bold text-gray-900 mb-6">Trabajos</h2>
-    {/* Add photo gallery grid */}
-  </div>
-);
-
-const Disandro: React.FC = () => {
+const Morra: React.FC = () => {
   return (
-    <DisandroLayout>
+    <MorraLayout>
       <Routes>
         <Route index element={<Trayectoria />} />
         <Route path="library" element={<Biblioteca />} />
         <Route path="music" element={<Discoteca />} />
-        <Route path="works" element={<Trabajos />} />
         <Route path="gallery" element={<Galeria />} />
       </Routes>
-    </DisandroLayout>
+    </MorraLayout>
   );
 };
 
-export default Disandro;
+export default Morra;
