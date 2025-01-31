@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {  } from 'lucide-react';
 import { useActivities } from '../hooks/useActivities';
 import { Calendar, BookOpen, Users, Mic, Landmark, Music, Video, Theater, Hammer, Globe } from 'lucide-react';
 const Activities: React.FC = () => {
-  const { activities, loading, error } = useActivities();
+  const { getActivities, loading, error } = useActivities();
   const [selectedType, setSelectedType] = useState<string>('all');
+  const [activities, setActivities] = useState<Activity[]>([]);
 
   const activityTypes = [
     { label: 'Todas', value: 'all', icon: Globe },
@@ -16,6 +17,14 @@ const Activities: React.FC = () => {
     { label: 'Teatro Leído', value: 'theater', icon: Theater },
     { label: 'Talleres', value: 'workshop', icon: Hammer },
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedNews = await getActivities();
+      setActivities(fetchedNews);
+    };
+    fetchData();
+  }, [])
   const filteredActivities = React.useMemo(() => {
     if (selectedType === 'all') return activities;
     return activities.filter(activity => activity.type === selectedType);

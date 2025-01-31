@@ -6,7 +6,7 @@ import { ActivityModal } from '../../components/Modals/ActivityModal';
 
 const AdminActivities: React.FC = () => {
   const {
-    activities,
+    getActivities,
     createActivity,
     updateActivity,
     deleteActivity,
@@ -16,8 +16,17 @@ const AdminActivities: React.FC = () => {
   const [filteredActivities, setFilteredActivities] = useState<Activity[]>([]);
   const [selectedType, setSelectedType] = useState('all');
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+  const [activities, setActivities] = useState<Activity[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [updateState, setUpdateState] = useState(false);
+  const [isUpload, setIsUpload] = useState(false);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const fetchedNews = await getActivities();
+        setActivities(fetchedNews);
+      };
+      fetchData();
+    }, [isUpload])
 
 
   const activityTypes = [
@@ -41,23 +50,24 @@ const AdminActivities: React.FC = () => {
       setFilteredActivities(filtered);
     }
     
-  }, [activities, searchTerm, selectedType, updateState]);
+  }, [activities, searchTerm, selectedType]);
 
   // Manejar la creación/edición de actividad
   const handleSave = async (newActivity: Activity) => {
     if (selectedActivity) {
       console.log("act upd")
-      await updateActivity(newActivity);
+      await updateActivity(newActivity.id, newActivity);
     } else {
       await createActivity(newActivity);
     }
     setShowModal(false);
-    setUpdateState((prevupdateState) => !prevupdateState)
+    setIsUpload((prev) => !prev)
   };
 
   // Manejar la eliminación de actividad
   const handleDelete = async (activityId: string) => {
     await deleteActivity(activityId);
+    setIsUpload((prev) => !prev)
   };
 
   return (
