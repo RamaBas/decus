@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PlusCircle, Pencil, Trash2, Search } from 'lucide-react';
 import type { Academic } from '../../types';
 import { useAcademics } from '../../hooks/useAcademics';
@@ -7,22 +7,30 @@ import { AcademicModal } from '../../components/Modals/AcademicModal';
 
 const AdminAcademics: React.FC = () => {
   const {
-      academics,
+      getAcademics,
       createAcademic,
       updateAcademic,
       deleteAcademic
     } = useAcademics();
+  const [academics, setAcademics] = useState<Academic[]>([]);
   const [newAcademics, setNewAcademics] = useState<Academic[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedAcademic, setSelectedAcademic] = useState<Academic | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpload, setIsUpload] = useState(false);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedAcademics = await getAcademics();
+      setAcademics(fetchedAcademics);
+    };
+    fetchData();
+  }, [isUpload])
+  
   const filteredAcademics = React.useMemo(() => {
     return academics.filter(academic =>
-      academic.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      academic.specialty.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      academic.faculty.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    academic.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   }, [academics, searchTerm]);
 
   const handleOpenModal = (academic?: Academic) => {
@@ -35,14 +43,23 @@ const AdminAcademics: React.FC = () => {
     setSelectedAcademic(null);
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteAcademic(id);
+      setIsUpload((prev) => !prev);
+    } catch (error) {
+      console.error('Error al eliminar:', error);
+    }
+  };
+
   const handleSave = async (newAcademics: Academic) => {
     if (selectedAcademic) {
-      await updateAcademic(newAcademics);
+      await updateAcademic(selectedAcademic.id,newAcademics);
     } else {
       await createAcademic(newAcademics);
     }
+    setIsUpload((prev) => !prev);
     handleCloseModal();
-    setUpdateState((prevupdateState) => !prevupdateState)
   };
 
   return (
@@ -82,8 +99,6 @@ const AdminAcademics: React.FC = () => {
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Académico</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Especialidad</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Facultad</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
                     <th className="relative px-6 py-3"><span className="sr-only">Acciones</span></th>
                   </tr>
@@ -102,8 +117,6 @@ const AdminAcademics: React.FC = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">{academic.specialty}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{academic.faculty}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${academic.type === 'honorary' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>{academic.type === 'honorary' ? 'Honorario' : 'Ordinario'}</span>
                       </td>
@@ -111,7 +124,7 @@ const AdminAcademics: React.FC = () => {
                         <button className="text-indigo-600 hover:text-indigo-900 mr-4" onClick={() => handleOpenModal(academic)}>
                           <Pencil className="h-5 w-5" />
                         </button>
-                        <button className="text-red-600 hover:text-red-900" onClick={() => setNewAcademics(prev => prev.filter(a => a.id !== academic.id))}>
+                        <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(academic.id)}>
                           <Trash2 className="h-5 w-5" />
                         </button>
                       </td>
@@ -123,7 +136,6 @@ const AdminAcademics: React.FC = () => {
           </div>
         </div>
       </div>
-
       <AcademicModal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} academic={selectedAcademic} />
     </div>
   );

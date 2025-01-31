@@ -1,10 +1,20 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { FileText, ExternalLink } from 'lucide-react';
 import { useAcademics } from '../hooks/useAcademics';
+import { Academic } from '../types';
 
 const Academics: React.FC = () => {
-  const { academics, isLoading, error } = useAcademics();
+  const { getAcademics, isLoading, error } = useAcademics();
   const [selectedType, setSelectedType] = useState<'all' | 'honorary' | 'ordinary'>('all');
+  const [academics, setAcademics] = useState<Academic[]>([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const fetchedAcademics = await getAcademics();
+        setAcademics(fetchedAcademics);
+      };
+      fetchData();
+    }, [])
 
   const filteredAcademics = useMemo(() => {
     if (selectedType === 'all') return academics;

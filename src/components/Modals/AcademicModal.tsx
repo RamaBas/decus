@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAcademics } from "../../hooks/useAcademics";
 
 interface Academic {
   id?: string;

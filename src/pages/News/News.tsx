@@ -12,7 +12,6 @@ const News: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const fetchedNews = await getNews(); // Esperamos la respuesta
-      console.log("fetchedNews", fetchedNews);
       setNews(fetchedNews);
     };
     fetchData();
