@@ -5,16 +5,21 @@ import { useNews } from '../../hooks/useNews';
 import { NewsModal } from '../../components/Modals/NewsModal';
 
 const AdminNews: React.FC = () => {
-  const { news, createNews, updateNews, deleteNews } = useNews();
+  const { getNews, createNews, updateNews, deleteNews } = useNews();
   
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedNews, setSelectedNews] = useState<News | null>(null);
-  const [updateState, setUpdateState] = useState(false);
+  const [news, setNews] = useState<News[]>([]);
+  const [isUpload, setIsUpload] = useState(false);
 
   useEffect(() => {
-    setUpdateState((prev) => !prev); // Forzar actualización tras cambios
-  }, [news]);
+      const fetchData = async () => {
+        const fetchedNews = await getNews();
+        setNews(fetchedNews);
+      };
+      fetchData();
+    }, [isUpload])
 
   const filteredNews = useMemo(() => {
     return news.filter((item) =>
@@ -30,12 +35,14 @@ const AdminNews: React.FC = () => {
     } else {
       await createNews(newsItem);
     }
+    setIsUpload((prev) => !prev);
     setShowModal(false);
   };
 
   // Manejar la eliminación de noticia
   const handleDelete = async (newsId: string) => {
     await deleteNews(newsId);
+    setIsUpload((prev) => !prev);
   };
 
   return (

@@ -17,17 +17,14 @@ export function useNews() {
 
   const createNews = async (news: Partial<News>) => {
     await create(news);
-    getNews();
   };
 
   const updateNews = async (id: string, news: Partial<News>) => {
     await update(id, news);
-    getNews();
   };
 
   const deleteNews = async (id: string) => {
     await remove(id);
-    getNews();
   };
 
   return {
