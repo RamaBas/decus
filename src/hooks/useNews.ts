@@ -11,7 +11,6 @@ export function useNews() {
 
   const getNews = async () => {
     const fetchedNews = await fetchData();
-    console.log("fetchedNews", fetchedNews);
     return fetchedNews; // ✅ Ahora asignamos el resultado correctamente
   };
 

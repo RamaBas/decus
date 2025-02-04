@@ -25,8 +25,6 @@ interface BookModalProps {
 }
 
 export const BookModal: React.FC<BookModalProps> = ({ isOpen, onClose, book, onSave }) => {
-  const { createBook, updateBook } = useBooks();
-
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");

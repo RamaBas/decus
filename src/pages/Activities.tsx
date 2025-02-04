@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {  } from 'lucide-react';
 import { useActivities } from '../hooks/useActivities';
 import { Calendar, BookOpen, Users, Mic, Landmark, Music, Video, Theater, Hammer, Globe } from 'lucide-react';
+import { Activity } from '../types';
 const Activities: React.FC = () => {
   const { getActivities, loading, error } = useActivities();
   const [selectedType, setSelectedType] = useState<string>('all');

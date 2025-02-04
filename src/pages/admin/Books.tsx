@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PlusCircle, Pencil, Trash2, Search, Filter } from 'lucide-react';
 import { useBooks } from '../../hooks/useBook';
 import { BookModal } from '../../components/Modals/BookModal';
 import { Book } from '../../types';
 
 const AdminBooks: React.FC = () => {
-  const { books, createBook, updateBook, deleteBook, loading, error } = useBooks();
+  const { getBooks, createBook, updateBook, deleteBook, loading, error } = useBooks();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
+  const [books, setBooks] = useState<Book[]>([]);
+  const [isUpload, setIsUpload] = useState(false);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+          const fetchedNews = await getBooks();
+          setBooks(fetchedNews);
+        };
+        fetchData();
+      }, [isUpload])
 
   const filteredBooks = React.useMemo(() => {
     return books.filter(book => {
@@ -26,16 +37,20 @@ const AdminBooks: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSave = (bookData: Book) => {
-    console.log("currentBook", currentBook?.id);
-    console.log("bookData", bookData);
+  const handleSave = async (bookData: Book) => {
     if (currentBook) {
-      updateBook(currentBook?.id, {...bookData });
+      await updateBook(currentBook?.id, {...bookData });
     } else {
-      createBook({ id: Date.now().toString(), ...bookData });
+      await createBook({ ...bookData });
     }
+    setIsUpload(prev => !prev);
     setIsModalOpen(false);
   };
+
+  const handleDelete = async (bookId: string) => {
+    await deleteBook(bookId);
+    setIsUpload(prev => !prev);
+  }
 
   return (
     <div className="space-y-6">
@@ -116,7 +131,7 @@ const AdminBooks: React.FC = () => {
                         <button className="text-indigo-600 hover:text-indigo-900 mr-4" onClick={() => handleOpenModal(book)}>
                           <Pencil className="h-5 w-5" />
                         </button>
-                        <button className="text-red-600 hover:text-red-900" onClick={() => deleteBook(book.id)}>
+                        <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(book.id)}>
                           <Trash2 className="h-5 w-5" />
                         </button>
                       </td>
