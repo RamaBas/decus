@@ -61,7 +61,7 @@ const AdminAcademics: React.FC = () => {
     setIsUpload((prev) => !prev);
     handleCloseModal();
   };
-
+  console.log("filteredAcademics", filteredAcademics);
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -104,7 +104,7 @@ const AdminAcademics: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredAcademics.map((academic) => (
+                  {filteredAcademics.map((academic: Academic) => (
                     <tr key={academic.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">

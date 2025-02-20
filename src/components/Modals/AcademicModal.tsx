@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
-
-interface Academic {
-  id?: string;
-  name: string;
-  type: string;
-  cv_url: string;
-  decus_activities: string;
-  photo_url: string;
-}
+import UploadAcademicPhoto from "../../utils/uploadPhoto";
+import FileUploader from "../../utils/fileUploader";
+import { Academic } from "../../types";
 
 const academicTypes = [
   { value: 'honorary', label: 'Honorario' },
@@ -20,21 +14,24 @@ interface AcademicModalProps {
   academic?: Academic | null;
   onSave: (academic: Academic) => void;
 }
+type MembershipType = 'honorary' | 'ordinary';
+
 
 export const AcademicModal: React.FC<AcademicModalProps> = ({ isOpen, onClose, academic, onSave }) => {
   const [name, setName] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState<MembershipType>('ordinary');
   const [cvUrl, setCvUrl] = useState('');
   const [decusActivities, setDecusActivities] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
+  
 
   useEffect(() => {
     if (academic) {
       setName(academic.name || '');
       setType(academic.type || '');
-      setCvUrl(academic.cv_url || '');
-      setDecusActivities(academic.decus_activities || '');
-      setPhotoUrl(academic.photo_url || '');
+      setCvUrl(academic.cvUrl || '');
+      setDecusActivities(academic.decusActivities || '');
+      setPhotoUrl(academic.photoUrl || '');
     }
   }, [academic]);
 
@@ -42,12 +39,12 @@ export const AcademicModal: React.FC<AcademicModalProps> = ({ isOpen, onClose, a
     e.preventDefault();
 
     const academicData: Academic = {
-      id: academic?.id || undefined,
+      id: academic?.id || "",
       name,
       type,
-      cv_url: cvUrl,
-      decus_activities: decusActivities,
-      photo_url: photoUrl,
+      cvUrl,
+      decusActivities,
+      photoUrl,
     };
 
     onSave(academicData);
@@ -80,7 +77,7 @@ export const AcademicModal: React.FC<AcademicModalProps> = ({ isOpen, onClose, a
             <label className="block text-gray-700 font-medium mb-1">Tipo</label>
             <select
               value={type}
-              onChange={(e) => setType(e.target.value)}
+              onChange={(e) => setType(e.target.value as MembershipType)}
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
@@ -94,18 +91,6 @@ export const AcademicModal: React.FC<AcademicModalProps> = ({ isOpen, onClose, a
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">URL del CV</label>
-            <input
-              type="text"
-              placeholder="https://cv-ejemplo.com"
-              value={cvUrl}
-              onChange={(e) => setCvUrl(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          <div>
             <label className="block text-gray-700 font-medium mb-1">Actividades DECUS</label>
             <textarea
               placeholder="Ingrese actividades relacionadas"
@@ -115,19 +100,8 @@ export const AcademicModal: React.FC<AcademicModalProps> = ({ isOpen, onClose, a
               required
             />
           </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">URL de la Foto</label>
-            <input
-              type="text"
-              placeholder="https://foto-ejemplo.com"
-              value={photoUrl}
-              onChange={(e) => setPhotoUrl(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-
+          <FileUploader isImage={false} onUploadURL={setCvUrl} />
+          <FileUploader isImage onUploadURL={setPhotoUrl} />
           <div className="flex justify-end space-x-2">
             <button
               type="button"

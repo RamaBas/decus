@@ -1,16 +1,16 @@
 export interface Academic {
   id: string;
   name: string;
-  specialty: string;
-  email: string;
-  phone: string;
-  faculty: string;
+  specialty?: string;
+  email?: string;
+  phone?: string;
+  faculty?: string;
   photoUrl: string;
   type: 'honorary' | 'ordinary';
   cvUrl: string;
-  decusActivities: string;
-  createdAt: string;
-  updatedAt: string;
+  decusActivities?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Book {

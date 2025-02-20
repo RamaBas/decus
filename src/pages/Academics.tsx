@@ -88,7 +88,7 @@ const Academics: React.FC = () => {
                 <td className="py-4 px-6">
                   <a
                     href={academic.cvUrl}
-                    target="_blank"
+                    download
                     rel="noopener noreferrer"
                     className="flex items-center text-blue-500 hover:text-blue-700"
                   >
