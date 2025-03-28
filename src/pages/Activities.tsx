@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {  } from 'lucide-react';
 import { useActivities } from '../hooks/useActivities';
-import { Calendar, BookOpen, Users, Mic, Landmark, Music, Video, Theater, Hammer, Globe } from 'lucide-react';
+import { Calendar, BookOpen, Users, Mic, Landmark, Music, Video, Theater, Hammer, Globe, CalendarDays } from 'lucide-react';
 import { Activity } from '../types';
 const Activities: React.FC = () => {
   const { getActivities, loading, error } = useActivities();
@@ -11,6 +11,7 @@ const Activities: React.FC = () => {
   const activityTypes = [
     { label: 'Todas', value: 'all', icon: Globe },
     { label: 'Cursos', value: 'course', icon: BookOpen },
+    { label: 'Jornadas', value: 'workDay', icon: CalendarDays },
     { label: 'Conferencias', value: 'conference', icon: Mic },
     { label: 'Seminarios', value: 'seminar', icon: Landmark },
     { label: 'Conciertos', value: 'concert', icon: Music },
