@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Book, GraduationCap, Library, Calendar, BookOpen, Bell, Menu, X } from 'lucide-react';
 
 const Layout: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
 
   const navigation = [
     { name: 'Quiénes Somos', href: '/about', icon: Book },
     { name: 'Carlos A. Disandro', href: '/disandro', icon: GraduationCap },
-    { name: 'Elvira Morra', href: '/morra', icon: GraduationCap },
+    { name: 'Biblioteca "Prof. Elvira Morra"', href: '/morra', icon: GraduationCap },
     { name: 'Académicos', href: '/academics', icon: GraduationCap },
     { name: 'Actividades Realizadas', href: '/activities', icon: Calendar },
-    { name: 'Publicaciones', href: '/publications', icon: BookOpen },
+    { name: 'Publicaciones', href: '/publications', icon: BookOpen, submenu: [
+        { name: 'Tienda', href: '/publications/tienda' },
+        { name: 'Grabaciones', href: '/publications/grabaciones' },
+        { name: 'Videos', href: '/publications/videos' }
+      ] 
+    },
     { name: 'Novedades', href: '/news', icon: Bell },
     { name: 'Admin', href: '/admin/login', icon: Bell },
   ];
@@ -38,13 +44,34 @@ const Layout: React.FC = () => {
             {/* Desktop navigation */}
             <nav className="hidden lg:flex lg:space-x-8">
               {navigation.map((item) => (
-                <Link
+                <div
                   key={item.name}
-                  to={item.href}
-                  className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                  className="relative"
+                  onMouseEnter={() => item.submenu && setIsSubmenuOpen(true)}
+                  onMouseLeave={() => item.submenu && setIsSubmenuOpen(false)}
                 >
-                  {item.name}
-                </Link>
+                  <Link
+                    to={item.href}
+                    className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    {item.name}
+                  </Link>
+
+                  {/* Submenú de Publicaciones */}
+                  {item.submenu && isSubmenuOpen && (
+                    <div className="absolute left-0 mt-2 w-48 bg-white shadow-md rounded-md z-10">
+                      {item.submenu.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          to={subItem.href}
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </nav>
           </div>
@@ -55,17 +82,34 @@ const Layout: React.FC = () => {
           <div className="lg:hidden">
             <div className="pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <div className="flex items-center">
-                    <item.icon className="h-5 w-5 mr-2" />
-                    {item.name}
-                  </div>
-                </Link>
+                <div key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="flex items-center">
+                      <item.icon className="h-5 w-5 mr-2" />
+                      {item.name}
+                    </div>
+                  </Link>
+
+                  {/* Submenú en mobile (colapsable) */}
+                  {item.submenu && (
+                    <div className="ml-6 space-y-1">
+                      {item.submenu.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          to={subItem.href}
+                          className="block text-gray-600 hover:text-gray-900 px-3 py-1"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
@@ -112,12 +156,7 @@ const Layout: React.FC = () => {
                 Redes Sociales
               </h3>
               <div className="mt-4 space-y-2">
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-gray-900"
-                >
-                  Facebook
-                </a>
+                <a href="#" className="text-gray-500 hover:text-gray-900">Facebook</a>
               </div>
             </div>
           </div>

@@ -5,7 +5,7 @@ export interface Academic {
   email?: string;
   phone?: string;
   faculty?: string;
-  photoUrl: string;
+  photoUrl: Array<string>;
   type: 'honorary' | 'ordinary';
   cvUrl: string;
   decusActivities?: string;
@@ -84,5 +84,5 @@ export interface AdminStats {
   totalNews: number;
   recentActivities: Activity[];
   recentPublications: Publication[];
-  recentNews: News[];
+  recentNews: NewsDTO[];
 }

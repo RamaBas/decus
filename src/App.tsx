@@ -6,7 +6,7 @@ import Login from './pages/admin/Login';
 import Home from './pages/Home';
 import About from './pages/About';
 import Disandro from './pages/Disandro';
-import Academics from './pages/Academics';
+import Academics from './pages/Academics/Academics';
 import Library from './pages/Library';
 import Activities from './pages/Activities';
 import Publications from './pages/Publications';
@@ -20,6 +20,8 @@ import AdminNews from './pages/admin/News';
 import PrivateRoute from './routes/privateRoute';
 import Morra from './pages/Morra';
 import NewsDetail from './pages/News/NewDetail';
+import AcademicDetail from './pages/Academics/AcademicsDetail';
+import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   return (
@@ -32,12 +34,14 @@ export default function App() {
           <Route path="disandro/*" element={<Disandro />} />
           <Route path="morra/*" element={<Morra />} />
           <Route path="academics" element={<Academics />} />
+          <Route path="academics/:id" element={<AcademicDetail />} />
           <Route path="library" element={<Library />} />
           <Route path="activities" element={<Activities />} />
           <Route path="publications" element={<Publications />} />
           <Route path="news" element={<News />} />
           <Route path="/news/:id" element={<NewsDetail />} />
           <Route path="/admin/login" element={<Login />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
 
         {/* Rutas privadas */}
