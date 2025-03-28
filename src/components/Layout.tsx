@@ -30,7 +30,7 @@ const Layout: React.FC = () => {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center">
               <Library className="h-8 w-8 text-indigo-600" />
-              <span className="ml-2 text-xl font-semibold text-gray-900">DECUS</span>
+              <span className="ml-2 text-xl font-semibold text-gray-900">Fundación DECUS</span>
             </Link>
 
             {/* Mobile menu button */}
@@ -130,7 +130,7 @@ const Layout: React.FC = () => {
                 Contacto
               </h3>
               <div className="mt-4 space-y-2">
-                <p className="text-gray-500">Biblioteca Académica DECUS</p>
+                <p className="text-gray-500">Fundación DECUS</p>
                 <p className="text-gray-500">contacto@decus.edu.ar</p>
               </div>
             </div>
@@ -162,7 +162,7 @@ const Layout: React.FC = () => {
           </div>
           <div className="mt-8 border-t border-gray-200 pt-8">
             <p className="text-center text-gray-400">
-              © {new Date().getFullYear()} Biblioteca Académica DECUS. Todos los derechos reservados.
+              © {new Date().getFullYear()} Fundación<noscript></noscript> DECUS. Todos los derechos reservados.
             </p>
           </div>
         </div>
