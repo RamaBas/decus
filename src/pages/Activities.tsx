@@ -12,10 +12,10 @@ const Activities: React.FC = () => {
     { label: 'Todas', value: 'all', icon: Globe },
     { label: 'Cursos', value: 'course', icon: BookOpen },
     { label: 'Jornadas', value: 'workDay', icon: CalendarDays },
-    { label: 'Conferencias', value: 'conference', icon: Mic },
     { label: 'Seminarios', value: 'seminar', icon: Landmark },
+    { label: 'Conferencias', value: 'conference', icon: Mic },
     { label: 'Conciertos', value: 'concert', icon: Music },
-    { label: 'Proyecciones', value: 'video', icon: Video },
+    { label: 'Proyecciones Videos', value: 'video', icon: Video },
     { label: 'Teatro Leído', value: 'theater', icon: Theater },
     { label: 'Talleres', value: 'workshop', icon: Hammer },
   ];
