@@ -76,7 +76,7 @@ const AdminActivities: React.FC = () => {
         <h1 className="text-2xl font-semibold text-gray-900">Gestión de Actividades</h1>
         <button
           type="button"
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
           onClick={() => {
             setSelectedActivity(null);
             setShowModal(true);
@@ -118,14 +118,14 @@ const AdminActivities: React.FC = () => {
           {filteredActivities.map((activity) => (
             <li key={activity.id} className="px-4 py-4 sm:px-6 flex justify-between items-center">
               <div>
-                <p className="text-sm font-medium text-indigo-600">
+                <p className="text-sm font-medium text-green-600">
                   {activityTypes.find((type) => type.value === activity.type)?.label}
                 </p>
                 <p className="text-lg font-semibold text-gray-900">{activity.title}</p>
                 <p className="mt-2 text-sm text-gray-500">{activity.description}</p>
               </div>
               <div className="flex space-x-4">
-                <button className="text-indigo-600 hover:text-indigo-900" onClick={() => setSelectedActivity(activity) || setShowModal(true)}>
+                <button className="text-green-600 hover:text-green-900" onClick={() => setSelectedActivity(activity) || setShowModal(true)}>
                   <Pencil className="h-5 w-5" />
                 </button>
                 <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(activity.id)}>

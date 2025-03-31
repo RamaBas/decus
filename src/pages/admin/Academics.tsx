@@ -68,7 +68,7 @@ const AdminAcademics: React.FC = () => {
         <h1 className="text-2xl font-semibold text-gray-900">Gestión de Académicos</h1>
         <button
           type="button"
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
           onClick={() => handleOpenModal()}
         >
           <PlusCircle className="h-5 w-5 mr-2" />
@@ -85,7 +85,7 @@ const AdminAcademics: React.FC = () => {
               placeholder="Buscar académicos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm"
             />
           </div>
         </div>
@@ -121,7 +121,7 @@ const AdminAcademics: React.FC = () => {
                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${academic.type === 'honorary' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>{academic.type === 'honorary' ? 'Honorario' : 'Ordinario'}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button className="text-indigo-600 hover:text-indigo-900 mr-4" onClick={() => handleOpenModal(academic)}>
+                        <button className="text-green-600 hover:text-green-900 mr-4" onClick={() => handleOpenModal(academic)}>
                           <Pencil className="h-5 w-5" />
                         </button>
                         <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(academic.id)}>

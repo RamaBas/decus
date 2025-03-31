@@ -35,9 +35,9 @@ const Academics: React.FC = () => {
       </div>
 
       <div className="flex justify-center space-x-4">
-        <button onClick={() => setSelectedType('all')} className={`px-4 py-2 rounded-md ${selectedType === 'all' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Todos</button>
-        <button onClick={() => setSelectedType('honorary')} className={`px-4 py-2 rounded-md ${selectedType === 'honorary' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Honorarios</button>
-        <button onClick={() => setSelectedType('ordinary')} className={`px-4 py-2 rounded-md ${selectedType === 'ordinary' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Ordinarios</button>
+        <button onClick={() => setSelectedType('all')} className={`px-4 py-2 rounded-md ${selectedType === 'all' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Todos</button>
+        <button onClick={() => setSelectedType('honorary')} className={`px-4 py-2 rounded-md ${selectedType === 'honorary' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Honorarios</button>
+        <button onClick={() => setSelectedType('ordinary')} className={`px-4 py-2 rounded-md ${selectedType === 'ordinary' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>Ordinarios</button>
       </div>
 
       <div className="overflow-x-auto">
@@ -54,7 +54,7 @@ const Academics: React.FC = () => {
             {filteredAcademics.map((academic) => (
               <tr key={academic.id} className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/academics/${academic.id}`, { state: { academic } })}>
                 <td className="py-4 px-6 text-gray-900 font-semibold">{academic.name}</td>
-                <td className="py-4 px-6 text-indigo-600 font-medium">{academic.type === 'honorary' ? 'Académico Honorario' : 'Académico Ordinario'}</td>
+                <td className="py-4 px-6 text-green-600 font-medium">{academic.type === 'honorary' ? 'Académico Honorario' : 'Académico Ordinario'}</td>
                 <td className="py-4 px-6 text-gray-700">{academic.decusActivities?.substring(0, 18)}...</td>
                 <td className="py-4 px-6">
                 <button

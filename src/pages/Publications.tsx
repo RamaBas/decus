@@ -54,7 +54,7 @@ const Publications: React.FC = () => {
                 placeholder="Buscar por título o autor..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
               />
             </div>
           </div>
@@ -63,7 +63,7 @@ const Publications: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="border border-gray-300 rounded-md py-2 pl-3 pr-10 focus:ring-indigo-500 focus:border-indigo-500"
+              className="border border-gray-300 rounded-md py-2 pl-3 pr-10 focus:ring-green-500 focus:border-green-500"
             >
               <option value="all">Todas las categorías</option>
               {categories.map((category) => (
@@ -95,7 +95,7 @@ const Publications: React.FC = () => {
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold text-gray-900">{publication.title}</h3>
-              <p className="mt-2 text-sm text-indigo-600 uppercase">
+              <p className="mt-2 text-sm text-green-600 uppercase">
                 {categories.find(cat => cat.value === publication.category)?.label}
               </p>
               <p className="mt-2 text-gray-600">{publication.description}</p>
@@ -107,7 +107,7 @@ const Publications: React.FC = () => {
                   href={publication.purchaseLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
                 >
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   Comprar

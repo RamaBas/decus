@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
               <h2 className="text-lg font-medium text-gray-900">Actividades Recientes</h2>
               <Link
                 to="/admin/activities"
-                className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                className="text-sm font-medium text-green-600 hover:text-green-500"
               >
                 Ver todas
               </Link>
@@ -107,7 +107,7 @@ const Dashboard: React.FC = () => {
               <h2 className="text-lg font-medium text-gray-900">Publicaciones Recientes</h2>
               <Link
                 to="/admin/publications"
-                className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                className="text-sm font-medium text-green-600 hover:text-green-500"
               >
                 Ver todas
               </Link>

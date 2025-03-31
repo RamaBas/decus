@@ -23,8 +23,8 @@ const AlphabetFilter: React.FC<AlphabetFilterProps> = ({ selectedLetter, onLette
         }
           className={`w-8 h-8 flex items-center justify-center rounded-full 
             ${selectedLetter === letter 
-              ? 'bg-indigo-600 text-white' 
-              : 'hover:bg-indigo-100 text-gray-600 hover:text-indigo-600'}`}
+              ? 'bg-green-600 text-white' 
+              : 'hover:bg-green-100 text-gray-600 hover:text-green-600'}`}
         >
           {letter}
         </button>

@@ -51,7 +51,7 @@ const AdminNews: React.FC = () => {
         <h1 className="text-2xl font-semibold text-gray-900">Gestión de Novedades</h1>
         <button
           type="button"
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
           onClick={() => {
             setSelectedNews(null);
             setShowModal(true);
@@ -80,7 +80,7 @@ const AdminNews: React.FC = () => {
           {filteredNews.map((item) => (
             <li key={item.id} className="px-4 py-4 sm:px-6 flex justify-between items-center">
               <div>
-                <p className="text-sm font-medium text-indigo-600">{item.title}</p>
+                <p className="text-sm font-medium text-green-600">{item.title}</p>
                 <p className="mt-2 text-sm text-gray-500 line-clamp-2">{item.content}</p>
                 <p className="flex items-center text-sm text-gray-500 mt-1">
                   <Calendar className="mr-1.5 h-5 w-5 text-gray-400" />
@@ -93,7 +93,7 @@ const AdminNews: React.FC = () => {
               </div>
               <div className="flex space-x-4">
                 <button
-                  className="text-indigo-600 hover:text-indigo-900"
+                  className="text-green-600 hover:text-green-900"
                   onClick={() => {
                     setSelectedNews(item);
                     setShowModal(true);

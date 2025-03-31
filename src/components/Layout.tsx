@@ -29,7 +29,7 @@ const Layout: React.FC = () => {
         <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center">
-              <Library className="h-8 w-8 text-indigo-600" />
+              <Library className="h-8 w-8 text-green-600" />
               <span className="ml-2 text-xl font-semibold text-gray-900">Fundación DECUS</span>
             </Link>
 

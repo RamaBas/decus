@@ -90,7 +90,7 @@ const About: React.FC = () => {
                 onClick={() => setActiveSection(index)} // Cambia la sección activa al hacer clic
                 className={`flex items-center px-3 py-4 text-sm font-medium ${
                   activeSection === index
-                    ? 'text-indigo-600 border-b-2 border-indigo-600'
+                    ? 'text-green-600 border-b-2 border-green-600'
                     : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
@@ -104,7 +104,7 @@ const About: React.FC = () => {
 
       <div className="bg-white rounded-lg shadow-lg overflow-hidden p-8">
         <div className="flex items-center mb-6">
-          <IconComponent className="h-8 w-8 text-indigo-600" /> {/* Usar el ícono correctamente */}
+          <IconComponent className="h-8 w-8 text-green-600" /> {/* Usar el ícono correctamente */}
           <h2 className="ml-4 text-2xl font-bold text-gray-900">
             {sections[activeSection].title}
           </h2>

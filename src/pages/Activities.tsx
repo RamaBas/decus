@@ -55,7 +55,7 @@ const Activities: React.FC = () => {
                 className={
                   `flex items-center px-3 py-4 text-sm font-medium ${
                     selectedType === type.value
-                        ? 'text-indigo-600 border-b-2 border-indigo-600'
+                        ? 'text-green-600 border-b-2 border-green-600'
                         : 'text-gray-500 hover:text-gray-900'
                     }`
                   }
@@ -86,7 +86,7 @@ const Activities: React.FC = () => {
                   </div>
                 )}
                 <div className="p-8">
-                  <div className="uppercase tracking-wide text-sm text-indigo-600 font-semibold">
+                  <div className="uppercase tracking-wide text-sm text-green-600 font-semibold">
                     {activityTypes.find(type => type.value === activity.type)?.label}
                   </div>
                   <h2 className="mt-2 text-xl font-semibold text-gray-900">

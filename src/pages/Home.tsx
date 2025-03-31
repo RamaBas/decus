@@ -81,10 +81,10 @@ const Home: React.FC = () => {
             <Link
               key={feature.name}
               to={feature.href}
-              className="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
+              className="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-500 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
             >
               <div>
-                <span className="rounded-lg inline-flex p-3 bg-indigo-50 text-indigo-700 ring-4 ring-white">
+                <span className="rounded-lg inline-flex p-3 bg-green-50 text-green-700 ring-4 ring-white">
                   <feature.icon className="h-6 w-6" aria-hidden="true" />
                 </span>
               </div>
