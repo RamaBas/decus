@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Book, Music, Image, FileText, Briefcase } from 'lucide-react';
+import Books from './Biblioteca';
+import Discoteca from './Discoteca';
 
 const DisandroLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
@@ -189,23 +191,6 @@ const TrayectoriaAcademica: React.FC = () => (
   </div>
 );
 
-const Biblioteca: React.FC = () => (
-  <div className="space-y-8">
-    <div className="bg-white shadow rounded-lg p-8">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Biblioteca Personal</h2>
-      {/* Add search and filter components */}
-      {/* Add book list component */}
-    </div>
-  </div>
-);
-
-const Discoteca: React.FC = () => (
-  <div className="bg-white shadow rounded-lg p-8">
-    <h2 className="text-2xl font-bold text-gray-900 mb-6">Colección Musical</h2>
-    {/* Add music collection grid */}
-  </div>
-);
-
 const Galeria: React.FC = () => (
   <div className="bg-white shadow rounded-lg p-8">
     <h2 className="text-2xl font-bold text-gray-900 mb-6">Galería Fotográfica</h2>
@@ -225,7 +210,7 @@ const Disandro: React.FC = () => {
     <DisandroLayout>
       <Routes>
         <Route index element={<TrayectoriaAcademica />} />
-        <Route path="library" element={<Biblioteca />} />
+        <Route path="library" element={<Books />} />
         <Route path="music" element={<Discoteca />} />
         <Route path="works" element={<Trabajos />} />
         <Route path="gallery" element={<Galeria />} />

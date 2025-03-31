@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Book, Music, Image, FileText } from 'lucide-react';
+import Biblioteca from './Biblioteca';
+import Discoteca from './Discoteca';
 
 const MorraLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
@@ -55,23 +57,6 @@ const Trayectoria: React.FC = () => (
         Su trabajo se centró en el estudio de las lenguas clásicas, la literatura y la cultura antigua.
       </p>
     </div>
-  </div>
-);
-
-const Biblioteca: React.FC = () => (
-  <div className="space-y-8">
-    <div className="bg-white shadow rounded-lg p-8">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Biblioteca Personal</h2>
-      {/* Add search and filter components */}
-      {/* Add book list component */}
-    </div>
-  </div>
-);
-
-const Discoteca: React.FC = () => (
-  <div className="bg-white shadow rounded-lg p-8">
-    <h2 className="text-2xl font-bold text-gray-900 mb-6">Colección Musical</h2>
-    {/* Add music collection grid */}
   </div>
 );
 

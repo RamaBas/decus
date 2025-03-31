@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface AlphabetFilterProps {
-  onLetterSelect: (letter: string) => void;
   selectedLetter: string;
+  onLetterSelect: (letter: string) => void;
 }
 
-const AlphabetFilter: React.FC<AlphabetFilterProps> = ({ onLetterSelect, selectedLetter }) => {
+const AlphabetFilter: React.FC<AlphabetFilterProps> = ({ selectedLetter, onLetterSelect }) => {
   const alphabet = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
   return (
@@ -13,7 +13,14 @@ const AlphabetFilter: React.FC<AlphabetFilterProps> = ({ onLetterSelect, selecte
       {alphabet.map((letter) => (
         <button
           key={letter}
-          onClick={() => onLetterSelect(letter)}
+          onClick={() => {
+            if (selectedLetter === letter) {
+              onLetterSelect('');
+            } else {
+              onLetterSelect(letter);
+            }
+          }
+        }
           className={`w-8 h-8 flex items-center justify-center rounded-full 
             ${selectedLetter === letter 
               ? 'bg-indigo-600 text-white' 
