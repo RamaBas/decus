@@ -46,7 +46,6 @@ const Academics: React.FC = () => {
             <tr>
               <th className="py-3 px-6 text-left">Nombre</th>
               <th className="py-3 px-6 text-left">Tipo</th>
-              <th className="py-3 px-6 text-left">Actividades</th>
               <th className="py-3 px-6 text-left"></th>
             </tr>
           </thead>
@@ -55,11 +54,10 @@ const Academics: React.FC = () => {
               <tr key={academic.id} className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/academics/${academic.id}`, { state: { academic } })}>
                 <td className="py-4 px-6 text-gray-900 font-semibold">{academic.name}</td>
                 <td className="py-4 px-6 text-green-600 font-medium">{academic.type === 'honorary' ? 'Académico Honorario' : 'Académico Ordinario'}</td>
-                <td className="py-4 px-6 text-gray-700">{academic.decusActivities?.substring(0, 18)}...</td>
                 <td className="py-4 px-6">
                 <button
                   onClick={() => navigate(`/academics/${academic.id}`, { state: { academic } })}
-                  className="text-blue-500 hover:text-blue-700 flex items-center gap-2"
+                  className="text-green-500 hover:text-green-700 flex items-center gap-2"
                 >
                   <Eye className="h-5 w-5" /> Ver
                 </button> 
