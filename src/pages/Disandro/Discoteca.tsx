@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import bibliotecaCadis from '../../utils/bibliotecaCadis';
+import discotecaCadis from '../../utils/discotecaCadis';
 import AlphabetFilter from '../../components/AlphabetFilter';
 
 const Discoteca: React.FC = () => {
@@ -11,7 +11,7 @@ const Discoteca: React.FC = () => {
     };
 
     // Función para filtrar los discos según la letra seleccionada
-    const filteredBooks = bibliotecaCadis.filter(book => {
+    const filteredDisco = discotecaCadis.filter(book => {
         if (!selectedLetter) return true; // Si no hay letra seleccionada, mostrar todos
         
         const firstChar = book.data.trim()[0];
@@ -35,8 +35,8 @@ const Discoteca: React.FC = () => {
             <div className="bg-white shadow rounded-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-3">Discoteca Personal</h2>
                 <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-3">
-                    {filteredBooks.length > 0 ? (
-                        filteredBooks.map((book, index) => (
+                    {filteredDisco.length > 0 ? (
+                        filteredDisco.map((book, index) => (
                             <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
                                 <div className="p-5">
                                     <p className="mt-2 text-gray-600">{book.data}</p>
