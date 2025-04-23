@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Book, GraduationCap, Library, Calendar, BookOpen, Bell, Menu, X } from 'lucide-react';
+import CartIcon from './cart/CartIcon';
+import logo from '../assets/logo.jpg';
 
 const Layout: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,10 +29,13 @@ const Layout: React.FC = () => {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-20">
             <Link to="/" className="flex items-center">
-              <Library className="h-8 w-8 text-green-600" />
-              <span className="ml-2 text-xl font-semibold text-gray-900">Fundación DECUS</span>
+            <img 
+            src={logo} 
+            alt="Logo Fundación DECUS" 
+            className="h-20 w-auto object-contain" // Ajusta la altura según necesites
+          />
             </Link>
 
             {/* Mobile menu button */}
@@ -42,7 +47,7 @@ const Layout: React.FC = () => {
             </button>
 
             {/* Desktop navigation */}
-            <nav className="hidden lg:flex lg:space-x-8">
+            <nav className="hidden lg:flex lg:items-center lg:space-x-8">
               {navigation.map((item) => (
                 <div
                   key={item.name}
@@ -73,6 +78,7 @@ const Layout: React.FC = () => {
                   )}
                 </div>
               ))}
+              <CartIcon />
             </nav>
           </div>
         </div>

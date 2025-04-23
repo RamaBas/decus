@@ -22,6 +22,7 @@ import Morra from './pages/Morra/Morra';
 import NewsDetail from './pages/News/NewDetail';
 import AcademicDetail from './pages/Academics/AcademicsDetail';
 import NotFoundPage from './pages/NotFoundPage';
+import BooksPage from './pages/Publications/BooksPage';
 
 export default function App() {
   return (
@@ -37,7 +38,7 @@ export default function App() {
           <Route path="academics/:id" element={<AcademicDetail />} />
           <Route path="library" element={<Library />} />
           <Route path="activities" element={<Activities />} />
-          <Route path="publications" element={<Publications />} />
+          <Route path="publications" element={<BooksPage />} />
           <Route path="news" element={<News />} />
           <Route path="/news/:id" element={<NewsDetail />} />
           <Route path="/admin/login" element={<Login />} />
