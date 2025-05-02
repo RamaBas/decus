@@ -6228,7 +6228,6 @@ const bibliotecaCadis = [
     {"data" : "Quadrini, Ugo. “Concepto de ‘humanitas’ en Cicerón”. En Iter Encuentros “Paideia y Humanitas”, Santiago de Chile, Universidad Metropolitana de Ciencias de la Educación, Centro de Estudios Clásicos, 1989. (Inv. 04048–04049)."},
     {"data" : "Quandt, Wilhelm. Bemerkungen zu den orphischen Hymnen. Wiesbaden, Franz Steiner Verlag, Hermes, Zeitschrift für klassische Philologie, Band 81, 1953. (Inv. 01985)."},
     {"data" : "Quandt, Wilhelm. Orphei Hymni. Berlín, Weidmannsche Buchhandlung, 1955. (Inv. 00780)."},
-    {"data" : "¿Qué es la Reforma Universitaria? Folleto con el estudio de Ernesto Palacio “La ideología de la Reforma Universitaria”, recopilación de artículos aparecidos en la Revista Criterio, Córdoba, 1932. (Inv. 04682)."},
     {"data" : "Quelques reliquies émouvantes de l’Histoire de France. Paris, Maurice Devriès Editeur, sin fecha de edición. (Inv. 03751)."},
     {"data" : "Quevedo, Amalia. “La ceguera según Aristóteles”. En Iter Encuentros “El ver y el oír en el mundo clásico”, Santiago de Chile, Universidad Metropolitana de Ciencias de la Educación, Centro de Estudios Clásicos, 1995. (Inv. 04051)."},
     {"data" : "Quevedo, Antonio. Música. Teatro del clavecín. Buenos Aires, Antología, Revista mensual de Literatura, Artes y ciencias, año I, nº 4, 1945. (Inv. 03962)."},

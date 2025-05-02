@@ -19,7 +19,7 @@ const Biblioteca: React.FC = () => {
         
         // Para el caso del '#', mostrar los que no empiezan con letra
         if (selectedLetter === '#') {
-            return !/[A-Za-z]/.test(normalizedFirstChar);
+            return true
         }
         
         // Para letras normales, comparar la primera letra normalizada
