@@ -8,9 +8,9 @@ type Book = {
   title: string;
   author: string;
   description: string;
+  indexBook: string;
   price: number;
   image: string;
-  available: number;
 };
 
 type BookModalProps = {
@@ -67,15 +67,14 @@ export default function BookCardModal({ book, open, onClose }: BookModalProps) {
     }
     onClose();
   };
-
+/* 
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity < 1) return;
-    if (newQuantity > book.available) {
-      toast.error(`No hay suficiente stock. Máximo disponible: ${book.available}`);
       return;
     }
     setQuantity(newQuantity);
-  };
+  }; */
+  console.log("book", book);
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
@@ -114,15 +113,15 @@ export default function BookCardModal({ book, open, onClose }: BookModalProps) {
                   <h3 className="text-lg font-semibold text-gray-500">Precio</h3>
                   <p className="text-2xl font-bold text-blue-600">${book.price}</p>
                 </div>
+              
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-500">Índice</h3>
+                  <p className="text-gray-700 whitespace-pre-line">{book.indexBook}</p>
+                </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-gray-500">Descripción</h3>
                   <p className="text-gray-700 leading-relaxed">{book.description}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-500">Disponibles</h3>
-                  <p className="text-gray-700">{book.available} unidades</p>
                 </div>
               </div>
 
@@ -145,7 +144,7 @@ export default function BookCardModal({ book, open, onClose }: BookModalProps) {
                       <button
                         onClick={() => handleQuantityChange(quantity + 1)}
                         className="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
-                        disabled={quantity >= book.available}
+                        disabled={quantity >= book.indexBook}
                       >
                         <Plus size={18} />
                       </button>

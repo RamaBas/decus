@@ -18,9 +18,6 @@ const DisandroLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =
     <div className="space-y-8">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-900">Carlos A. Disandro</h1>
-        <p className="mt-4 text-xl text-gray-500">
-          Explorar la vida y obra de un académico excepcional
-        </p>
       </div>
 
       <nav className="bg-white shadow rounded-lg">

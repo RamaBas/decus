@@ -5,8 +5,8 @@ type Book = {
   title: string;
   author: string;
   price: number;
+  indexBook: string;
   image: string;
-  available: number;
 };
 
 type CartItem = Book & {

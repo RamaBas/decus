@@ -10,8 +10,8 @@ type Book = {
   author: string;
   description: string;
   price: number;
+  indexBook: string;
   image: string;
-  available: number;
 };
 
 const BookCard = ({ book }: { book: Book }) => {
@@ -50,17 +50,12 @@ const BookCard = ({ book }: { book: Book }) => {
       return;
     }
     
-    if (newQuantity > book.available) {
-      toast.error(`No hay suficiente stock. Máximo disponible: ${book.available}`);
-      return;
-    }
-    
     updateQuantity(book.id, newQuantity);
   };
 
   return (
     <>
-      <div className="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 bg-white flex flex-col h-[500px] w-full">
+      <div onClick={() => setOpen(true)} className="cursor-pointer border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 bg-white flex flex-col h-[500px] w-full">
         {/* Imagen principal */}
         <div className="mb-3 h-[350px] overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center">
           {book.image ? (

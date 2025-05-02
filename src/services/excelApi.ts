@@ -1,8 +1,8 @@
 type Book = {
   title: string;
   description: string;
+  indexBook: string;
   price: number;
-  available: number;
   images: string[]; // Ahora es un array
 };
 
@@ -26,8 +26,8 @@ export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
       id: `book-${index}`, // ID único basado en posición
       title: row[0],
       description: row[1],
-      price: parseFloat(row[2]),
-      available: parseInt(row[3]),
+      indexBook: (row[2]),
+      price: parseFloat(row[3]),
       image: row[4],
     }));
   } catch (error) {
