@@ -18,7 +18,9 @@ const BookCard = ({ book }: { book: Book }) => {
   const [open, setOpen] = useState(false);
   const { addToCart, updateQuantity, removeFromCart, getItemQuantity } = useCart();
   const quantityInCart = getItemQuantity(book.id);
-  const handleAddToCart = () => {
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Previene que el evento se propague al contenedor
     addToCart(book);
     toast.success(
       <div className="flex items-center gap-2">
@@ -35,7 +37,8 @@ const BookCard = ({ book }: { book: Book }) => {
     );
   };
 
-  const handleQuantityChange = (newQuantity: number) => {
+  const handleQuantityChange = (newQuantity: number, e: React.MouseEvent) => {
+    e.stopPropagation(); // Previene que el evento se propague al contenedor
     if (newQuantity < 1) {
       removeFromCart(book.id);
       toast.success(
@@ -55,33 +58,42 @@ const BookCard = ({ book }: { book: Book }) => {
 
   return (
     <>
-      <div onClick={() => setOpen(true)} className="cursor-pointer border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 bg-white flex flex-col h-[500px] w-full">
-        {/* Imagen principal */}
-        <div className="mb-3 h-[350px] overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center">
-          {book.image ? (
-            <img
-              src={book.image}
-              alt={`Portada de ${book.title}`}
-              className="w-full h-full object-contain transition-transform duration-300 hover:scale-105"
-            />
-          ) : (
-            <div className="text-gray-400 text-sm">Sin imagen disponible</div>
-          )}
+      <div 
+        onClick={() => setOpen(true)} 
+        className="cursor-pointer border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 bg-white flex flex-col h-[500px] w-full"
+      >
+        {/* Contenido clickeable para abrir modal */}
+        <div className="flex-grow">
+          {/* Imagen principal */}
+          <div className="mb-3 h-[350px] overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center">
+            {book.image ? (
+              <img
+                src={book.image}
+                alt={`Portada de ${book.title}`}
+                className="w-full h-full object-contain transition-transform duration-300 hover:scale-105"
+              />
+            ) : (
+              <div className="text-gray-400 text-sm">Sin imagen disponible</div>
+            )}
+          </div>
+
+          {/* Información del libro */}
+          <div className="space-y-2">
+            <h3 
+              className="text-md font-bold text-gray-800 line-clamp-2 leading-tight" 
+              title={book.title}
+            >
+              {book.title}
+            </h3>
+            <p className="text-md font-semibold text-green-700">{book.price} ARS</p>
+          </div>
         </div>
 
-        {/* Contenido */}
-        <div className="flex-grow space-y-2">
-          <h3 
-            className="text-md font-bold text-gray-800 line-clamp-2 leading-tight" 
-            title={book.title}
-          >
-            {book.title}
-          </h3>
-          <p className="text-md font-semibold text-green-700">{book.price} ARS</p>
-        </div>
-
-        {/* Botones */}
-        <div className="mt-3 flex justify-end items-center">
+        {/* Botones (no clickeables para abrir modal) */}
+        <div 
+          className="mt-3 flex justify-end items-center"
+          onClick={(e) => e.stopPropagation()} // Previene la apertura del modal
+        >
           <button
             onClick={() => setOpen(true)}
             className="p-2 text-gray-500 hover:text-blue-600 transition-colors rounded-full hover:bg-blue-50 mr-2"
@@ -94,7 +106,7 @@ const BookCard = ({ book }: { book: Book }) => {
           {quantityInCart > 0 ? (
             <div className="flex items-center bg-green-50 rounded-full border border-green-100">
               <button
-                onClick={() => handleQuantityChange(quantityInCart - 1)}
+                onClick={(e) => handleQuantityChange(quantityInCart - 1, e)}
                 className="p-2 text-green-700 hover:text-white hover:bg-green-600 transition-colors rounded-l-full"
                 aria-label="Reducir cantidad"
               >
@@ -104,7 +116,7 @@ const BookCard = ({ book }: { book: Book }) => {
                 {quantityInCart}
               </span>
               <button
-                onClick={() => handleQuantityChange(quantityInCart + 1)}
+                onClick={(e) => handleQuantityChange(quantityInCart + 1, e)}
                 className="p-2 text-green-700 hover:text-white hover:bg-green-600 transition-colors rounded-r-full"
                 aria-label="Aumentar cantidad"
               >

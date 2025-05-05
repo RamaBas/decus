@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-import { useCart } from "../../context/CartContext";
-import { X, ShoppingCart, Plus, Minus } from "lucide-react";
-import toast from "react-hot-toast";
+import { useState, useRef, useEffect } from "react";
+import { X, BookOpen, Info } from "lucide-react";
 
 type Book = {
   id: string;
@@ -19,66 +17,39 @@ type BookModalProps = {
   onClose: () => void;
 };
 
-export default function BookCardModal({ book, open, onClose }: BookModalProps) {
-  const { addToCart, updateQuantity, getItemQuantity } = useCart();
-  const [quantity, setQuantity] = useState(1);
-  const quantityInCart = book ? getItemQuantity(book.id) : 0;
+type TabType = "description" | "index";
 
-  // Reset quantity when modal opens
+export default function BookCardModal({ book, open, onClose }: BookModalProps) {
+  const [activeTab, setActiveTab] = useState<TabType>("index");
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Cerrar modal al hacer clic fuera
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
     if (open) {
-      setQuantity(1);
+      document.addEventListener("mousedown", handleClickOutside);
     }
-  }, [open]);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open, onClose]);
 
   if (!open || !book) return null;
 
-  const handleAdd = () => {
-    if (quantityInCart > 0) {
-      updateQuantity(book.id, quantityInCart + quantity);
-      toast.success(
-        <div className="flex items-center gap-2">
-          <span>¡Cantidad actualizada para <span className="font-semibold">{book.title}</span>!</span>
-        </div>,
-        {
-          position: 'bottom-center',
-          duration: 3000,
-          style: {
-            background: '#f0fdf4',
-            color: '#166534',
-          }
-        }
-      );
-    } else {
-      addToCart(book, quantity);
-      toast.success(
-        <div className="flex items-center gap-2">
-          <span>¡<span className="font-semibold">{book.title}</span> añadido al carrito!</span>
-        </div>,
-        {
-          position: 'bottom-center',
-          duration: 3000,
-          style: {
-            background: '#f0fdf4',
-            color: '#166534',
-          }
-        }
-      );
-    }
-    onClose();
-  };
-/* 
-  const handleQuantityChange = (newQuantity: number) => {
-    if (newQuantity < 1) return;
-      return;
-    }
-    setQuantity(newQuantity);
-  }; */
-  console.log("book", book);
-
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-xl">
+      {/* Contenedor blanco con ref para detectar clicks fuera */}
+      <div 
+        ref={modalRef}
+        className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-xl"
+        onClick={(e) => e.stopPropagation()} // Previene que el click se propague al overlay
+      >
         <div className="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
           <h2 className="text-2xl font-bold text-gray-800">{book.title}</h2>
           <button
@@ -92,7 +63,7 @@ export default function BookCardModal({ book, open, onClose }: BookModalProps) {
 
         <div className="p-6">
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Imagen horizontal más grande */}
+            {/* Imagen del libro */}
             <div className="lg:w-1/2 flex justify-center bg-gray-50 rounded-lg p-4">
               <img
                 src={book.image}
@@ -105,61 +76,53 @@ export default function BookCardModal({ book, open, onClose }: BookModalProps) {
             <div className="lg:w-1/2 flex flex-col">
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-500">Autor</h3>
-                  <p className="text-xl">{book.author}</p>
-                </div>
-
-                <div>
                   <h3 className="text-lg font-semibold text-gray-500">Precio</h3>
                   <p className="text-2xl font-bold text-blue-600">${book.price}</p>
                 </div>
               
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-500">Índice</h3>
-                  <p className="text-gray-700 whitespace-pre-line">{book.indexBook}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-500">Descripción</h3>
-                  <p className="text-gray-700 leading-relaxed">{book.description}</p>
+                {/* Pestañas */}
+                <div className="pt-2">
+                  <div className="border-b border-gray-200">
+                    <nav className="flex space-x-4">
+                      <button
+                        onClick={() => setActiveTab("index")}
+                        className={`py-2 px-3 flex items-center gap-2 text-sm font-medium rounded-t-lg transition-colors ${
+                          activeTab === "index"
+                            ? "border-b-2 border-blue-500 text-blue-600"
+                            : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                        }`}
+                      >
+                        <BookOpen size={16} />
+                        Índice
+                      </button>
+                      <button
+                        onClick={() => setActiveTab("description")}
+                        className={`py-2 px-3 flex items-center gap-2 text-sm font-medium rounded-t-lg transition-colors ${
+                          activeTab === "description"
+                            ? "border-b-2 border-blue-500 text-blue-600"
+                            : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                        }`}
+                      >
+                        <Info size={16} />
+                        Descripción
+                      </button>
+                    </nav>
+                  </div>
+                  
+                  {/* Contenido con scroll controlado */}
+                  <div className="py-4 max-h-[300px] overflow-y-auto">
+                    {activeTab === "description" ? (
+                      <div className="text-gray-700 leading-relaxed pr-2">
+                        {book.description}
+                      </div>
+                    ) : (
+                      <div className="text-gray-700 whitespace-pre-line pr-2">
+                        {book.indexBook}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-
-              {/* Selector de cantidad y botón */}
-{/*               <div className="mt-8 pt-6 border-t">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <label className="text-lg font-medium">Cantidad:</label>
-                    <div className="flex items-center border rounded-lg overflow-hidden">
-                      <button
-                        onClick={() => handleQuantityChange(quantity - 1)}
-                        className="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
-                        disabled={quantity <= 1}
-                      >
-                        <Minus size={18} />
-                      </button>
-                      <span className="px-4 py-2 bg-white text-center w-12">
-                        {quantity}
-                      </span>
-                      <button
-                        onClick={() => handleQuantityChange(quantity + 1)}
-                        className="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
-                        disabled={quantity >= book.indexBook}
-                      >
-                        <Plus size={18} />
-                      </button>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={handleAdd}
-                    className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg transition-colors shadow-md"
-                  >
-                    <ShoppingCart size={20} />
-                    <span>{quantityInCart > 0 ? 'Actualizar' : 'Agregar'}</span>
-                  </button>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

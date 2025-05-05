@@ -1,37 +1,28 @@
-type Book = {
-  title: string;
-  description: string;
-  indexBook: string;
-  price: number;
-  images: string[]; // Ahora es un array
-};
-
-export async function fetchBooksFromGoogleSheet(): Promise<Book[]> {
-  const API_KEY = "AIzaSyBItN9MkUoavvZywaePzLiaQbuh1WBgIfc"
+// services/excelApi.ts
+export async function fetchBooksFromGoogleSheet(sheetName: string): Promise<Omit<Book, 'id'>[]> {
+  // Usa variables públicas de Next.js o valores directos en el cliente
+  const API_KEY = "AIzaSyBItN9MkUoavvZywaePzLiaQbuh1WBgIfc";
   const SHEET_ID = "1IuW2m2xS2JXBNZrfj_FB27jxh9EodsVw-SqPATAsCH4";
-  const SHEET_NAME = "Libros";
+  const RANGE = "A:E";
 
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}!${RANGE}?key=${API_KEY}`;
 
   try {
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`Error ${res.status}: ${await res.text()}`);
-
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    
     const data = await res.json();
-    const rows = data.values;
+    const rows = data.values || [];
 
-    if (!rows || rows.length === 0) return [];
-
-    return data.values.slice(1).map((row: string[], index: number) => ({
-      id: `book-${index}`, // ID único basado en posición
-      title: row[0],
-      description: row[1],
-      indexBook: (row[2]),
-      price: parseFloat(row[3]),
-      image: row[4],
+    return rows.slice(1).map((row: string[]) => ({
+      title: row[0]?.trim() || 'Sin título',
+      description: row[1]?.trim() || '',
+      indexBook: row[2]?.trim() || '',
+      price: parseFloat(row[3]?.replace(',', '.')) || 0,
+      image: row[4]?.trim() || '',
     }));
   } catch (error) {
-    console.error("Error al cargar libros desde Google Sheets:", error);
+    console.error("Error al cargar libros:", error);
     return [];
   }
 }

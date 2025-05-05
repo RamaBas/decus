@@ -17,14 +17,12 @@ export interface Book {
   id: string;
   title: string;
   author: string;
-  library: string;
-  available: boolean;
-  category: string;
-  coverUrl: string;
-  indexUrl: string;
   description: string;
-  createdAt: string;
-  updatedAt: string;
+  indexBook: string;
+  price: number;
+  images: string[];
+  library?: string;
+  available?: boolean;
 }
 
 export interface Activity {
