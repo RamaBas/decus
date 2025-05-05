@@ -58,7 +58,7 @@ Por favor, indíqueme disponibilidad y forma de pago. ¡Muchas gracias!
     // Simular procesamiento (remover en producción)
     setTimeout(() => {
       // Generar mensaje para WhatsApp
-      const phoneNumber = '5492215690717';
+      const phoneNumber = '5492215927144';
       const message = generateWhatsAppMessage();
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
       
