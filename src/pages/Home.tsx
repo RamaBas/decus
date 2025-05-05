@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Book, GraduationCap, Library, Calendar, BookOpen, Bell } from 'lucide-react';
+import logo from '../assets/logo.jpg'; // Asegúrate de que la ruta sea correcta
 
 const features = [
   {
@@ -54,14 +55,12 @@ const Home: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gray-900 bg-opacity-60"></div>
         </div>
-        <div className="relative max-w-9xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Fundación DECUS
-          </h1>
-          <p className="mt-6 text-xl text-gray-100 max-w-3xl">
-            Un espacio dedicado al conocimiento, la cultura y la investigación académica.
-            Descubra nuestra rica colección de obras y participe en nuestras actividades.
-          </p>
+        <div className="relative py-24 px-4 sm:py-32 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
+            <img
+              src={logo}
+              alt="Fundación DECUS"
+              className="w-[90%] h-auto object-contain drop-shadow-lg" // Ajusta el tamaño según necesites
+            />
         </div>
       </div>
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { Book, GraduationCap, Library, Calendar, BookOpen, Bell, Menu, X } from 'lucide-react';
+import { Book, GraduationCap, Calendar, BookOpen, Bell, Menu, X } from 'lucide-react';
 import CartIcon from './cart/CartIcon';
-import logo from '../assets/logo.jpg';
+import logo from '../assets/logoUnic.png';
 
 const Layout: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
