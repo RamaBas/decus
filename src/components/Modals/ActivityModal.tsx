@@ -11,6 +11,7 @@ interface Activity {
 const activityTypes = [
   { value: 'course', label: 'Curso' },
   { value: 'conference', label: 'Conferencia' },
+  { value: 'workDay', label: 'Jornada' },
   { value: 'seminar', label: 'Seminario' },
   { value: 'concert', label: 'Concierto' },
   { value: 'video', label: 'Video' },
