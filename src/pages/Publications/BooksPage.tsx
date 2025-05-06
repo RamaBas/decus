@@ -83,7 +83,7 @@ const BooksPage = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-6">Catálogo de Publicaciones</h1>
+      <h1 className="text-2xl font-bold mb-6">Tienda</h1>
       
       {/* Selector de colecciones */}
       <div className="flex flex-wrap gap-2 mb-6 border-b">

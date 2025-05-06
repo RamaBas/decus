@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { Book, GraduationCap, Calendar, BookOpen, Bell, Menu, X } from 'lucide-react';
+import { Book, GraduationCap, Calendar, BookOpen, Bell, Menu, X, Library } from 'lucide-react';
 import CartIcon from './cart/CartIcon';
 import logo from '../assets/logoUnic.png';
 
@@ -11,11 +11,11 @@ const Layout: React.FC = () => {
   const navigation = [
     { name: 'Quiénes Somos', href: '/about', icon: Book },
     { name: 'Carlos A. Disandro', href: '/disandro', icon: GraduationCap },
-    { name: 'Biblioteca "Prof. Elvira Morra"', href: '/morra', icon: GraduationCap },
     { name: 'Académicos', href: '/academics', icon: GraduationCap },
+    { name: 'Biblioteca "Prof. Elvira Morra"', href: '/morra', icon: GraduationCap },
     { name: 'Actividades Realizadas', href: '/activities', icon: Calendar },
-    { name: 'Publicaciones', href: '/publications', icon: BookOpen, submenu: [
-        { name: 'Tienda', href: '/publications/tienda' },
+    { name: 'Publicaciones', href: '', icon: BookOpen, submenu: [
+        { name: 'Tienda', href: '/publications/' },
         { name: 'Grabaciones', href: '/publications/grabaciones' },
         { name: 'Videos', href: '/publications/videos' }
       ] 
@@ -31,11 +31,8 @@ const Layout: React.FC = () => {
         <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <Link to="/" className="flex items-center">
-            <img 
-            src={logo} 
-            alt="Logo Fundación DECUS" 
-            className="h-20 w-auto object-contain" // Ajusta la altura según necesites
-          />
+              <Library className="h-8 w-8 text-green-600" />
+              <span className="ml-2 text-xl font-semibold text-gray-900">Fundación DECUS</span>
             </Link>
 
             {/* Mobile menu button */}
