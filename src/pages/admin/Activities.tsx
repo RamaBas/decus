@@ -35,7 +35,7 @@ const AdminActivities: React.FC = () => {
     { value: 'workDay', label: 'Jornada' },
     { value: 'seminar', label: 'Seminario' },
     { value: 'concert', label: 'Concierto' },
-    { value: 'video', label: 'Video' },
+    { value: 'video', label: 'Proyecciones Video' },
     { value: 'theater', label: 'Teatro' },
     { value: 'workshop', label: 'Taller' },
   ];  
