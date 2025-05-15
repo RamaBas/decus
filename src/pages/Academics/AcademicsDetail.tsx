@@ -268,7 +268,7 @@ const AcademicDetail: React.FC = () => {
         className="mb-8 flex items-center text-green-600 hover:text-green-800"
       >
         <ArrowLeft className="h-5 w-5 mr-2" />
-        Volver a Académicos
+        Volver atras
       </button>
 
       {/* Nombre del académico */}
