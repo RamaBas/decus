@@ -78,7 +78,7 @@ const Layout: React.FC = () => {
           <div className="flex justify-between items-center h-20">
             <Link to="/" className="flex items-center">
               <Library className="h-8 w-8 text-green-600" />
-              <span className="ml-2 text-xl font-semibold text-gray-900">Fundación DECUS</span>
+              <span className="ml-2 text-xl font-semibold text-gray-900 lg:space-x-0 xl:space-x-1">Fundación DECUS</span>
             </Link>
 
             <button
@@ -88,7 +88,7 @@ const Layout: React.FC = () => {
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
 
-            <nav className="hidden lg:flex lg:items-center lg:space-x-8">
+            <nav className="hidden lg:flex lg:items-center lg:space-x-0 xl:space-x-4">
               {navigation.map((item) => (
                 <div
                   key={item.name}
