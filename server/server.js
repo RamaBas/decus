@@ -8,7 +8,7 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://<TUNOMBRE>.vercel.app']
+  origin: ['http://localhost:5173', 'https://decus-five.vercel.app/']
 }));
 app.use(express.json());
 
