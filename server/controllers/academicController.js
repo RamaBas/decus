@@ -9,33 +9,32 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.create = async (req, res) => {
-  const { name, type, cv_url, decus_activities, photo_url } = req.body;
+// Crear un académico
+exports.createAcademic = async (req, res) => {
+  const { name, type, decus_activities, publications } = req.body;
   try {
-    const { rows } = await db.query(
-      `INSERT INTO academics (name, type, cv_url, decus_activities, photo_url) 
-       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [name, type, cv_url, decus_activities, photo_url]
+    const result = await db.query(
+      'INSERT INTO academics (name, type, decus_activities, publications) VALUES ($1, $2, $3, $4) RETURNING *',
+      [name, type, decus_activities, publications]
     );
-    res.status(201).json(rows[0]);
+    res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
-exports.update = async (req, res) => {
+// Actualizar académico
+exports.updateAcademic = async (req, res) => {
   const { id } = req.params;
-  const { name, type, cv_url, decus_activities, photo_url } = req.body;
+  const { name, type, decus_activities, publications } = req.body;
   try {
-    const { rows } = await db.query(
-      `UPDATE academics 
-       SET name=$1, type=$2, cv_url=$3, decus_activities=$4, photo_url=$5, updated_at=now() 
-       WHERE id=$6 RETURNING *`,
-      [name, type, cv_url, decus_activities, photo_url, id]
+    const result = await db.query(
+      'UPDATE academics SET name=$1, type=$2, decus_activities=$3, publications=$4 WHERE id=$5 RETURNING *',
+      [name, type, decus_activities, publications, id]
     );
-    res.json(rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
